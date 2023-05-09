@@ -1,0 +1,19 @@
+{
+  "name": "wa-orquestador",
+  "version": "1.0.0",
+  "description": "Estructura básica para orquestador de watson por medio de API calls",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "Esteban Barrios",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "pug": "^3.0.2"
+  }
+}
