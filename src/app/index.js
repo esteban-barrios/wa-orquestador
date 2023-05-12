@@ -9,7 +9,6 @@ require('dotenv').config();  // import env variables
 const app = express();
 // set port
 app.set("port",process.env.PORT);
-
 // set static
 const publicPath = path.join(__dirname,'../public');
 app.use(express.static(publicPath))
