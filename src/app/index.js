@@ -11,11 +11,13 @@ const app = express();
 app.set("port",process.env.PORT);
 // set static
 const publicPath = path.join(__dirname,'../public');
-app.use(express.static(publicPath))
+app.use(express.static(publicPath));
+// set ejs
+app.engine('ejs', require('ejs').__express);
 // set views folder
-app.set("views" , "./src/public/views");
+app.set("views" , "./src/views");
 // set views engine
-app.set("view engine", "pug");
+app.set('view engine', 'ejs');
 // set router
 app.use(routes);  
 // set error handlers

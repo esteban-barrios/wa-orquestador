@@ -5,15 +5,23 @@
   "main": "server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "tailwind:css": "postcss src/public/css/tailwind.css -o src/public/css/style.css",
+    "tailwind:watch": "postcss src/public/styles/tailwind.css -w -o src/public/styles/style.css"
   },
   "keywords": [],
   "author": "Esteban Barrios",
   "license": "ISC",
   "dependencies": {
+    "autoprefixer": "^10.4.14",
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "nodemon": "^2.0.22",
-    "pug": "^3.0.2"
+    "postcss": "^8.4.23",
+    "postcss-cli": "^10.1.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.2"
   }
 }

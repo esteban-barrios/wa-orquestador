@@ -1,6 +1,9 @@
 // Import fs and my timestamp module
 const fs = require("fs");
 const ts = require("./my_timestamps.js");
+require('dotenv').config();  // import env variables
+var isDev= process.env.IS_DEV;
+
 
 // Log file settings
 const log_dir = "./src/app/logger/logs/";
@@ -8,10 +11,10 @@ const log_file_name_prefix = "log";
 const log_file_name_suffix = ".txt";
 const max_log_file_size = 1024 * 1024; // 1 MB
 
+
 // Create stream to write output file
 var stream;
 var numLogs = getLogsNumber();
-console.log(numLogs);
 if (numLogs == 0){
   createNewLogFile(numLogs);
 }else{
@@ -30,11 +33,8 @@ exports.writeLog = function(content) {
     const log_file_stats = fs.statSync(log_file_name);
     const log_file_size = log_file_stats.size;
 
-    console.log(`file size: ${log_file_size}`);
-    console.log(`max size: ${max_log_file_size} \n`);
     // Si el archivo supera el tamaño máximo, cerrar el stream de escritura actual y crear uno nuevo
     if(log_file_size >= max_log_file_size) {
-      console.log("log file max sized")
       stream.end();
       createNewLogFile(getLogsNumber());
     }
@@ -43,7 +43,7 @@ exports.writeLog = function(content) {
     stream.write(ts.getDate(Date.now()) + "\n" + content + "\n\n");
   }
   catch(e) {
-    console.log("log.writeLog failed.\n" + e.stack);
+    if(isDev)console.log("log.writeLog failed.\n" + e.stack);
   }
 };
 
@@ -66,7 +66,7 @@ exports.clearLog = function(callback) {
   // Cerrar el stream de escritura
   stream.end(function(end_error_str) {
     if(end_error_str) {
-      console.log("log.clearLog end failed: " + end_error_str);
+      if(isDev)console.log("log.clearLog end failed: " + end_error_str);
       callback("log.clearLog end failed: " + end_error_str);
       return;
     }

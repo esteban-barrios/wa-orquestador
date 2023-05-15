@@ -1,6 +1,8 @@
 // import 
 const express = require('express');
 const logger = require( "../logger");  // import logger handler
+require('dotenv').config();  // import env variables
+var isDev= process.env.IS_DEV;
 
 // create new router with express
 const router = express.Router();
@@ -8,26 +10,22 @@ const router = express.Router();
 // middleware for logs
 router.use((req, res, next) => {
   let content = `${req.method} url:: ${req.url}`;
-  console.log(content + "\n");
+  if(isDev)console.log(content + "\n");
   logger.writeLog(content);
   next();
 });
 
 // handle get requests
 
-//router.get('*', function (req, res) {
-//  res.redirect('/error');
-//})
-
 router.get('/', (req, res) => { 
-  res.render('pages/index');
+  res.render('index');
 });
 
 // async error
 router.get('/async-error', (req, res, next) => {
   setTimeout(() => {
     try {
-      console.log("Async code example.")
+      //console.log("Async code example.")
       throw new Error;
   } catch (err) { // manually catching
       err.type = 'redirect';
@@ -35,9 +33,15 @@ router.get('/async-error', (req, res, next) => {
   }
   }, 100)
 })
-router.get('/error', (req, res) => {
-  res.send('Error page');
-});
+
+//default error
+//router.get('/error', (req, res) => {
+//  res.status(404).render('error', {
+//    title: 'Página no encontrada',
+//    status: 404, // Agregar variable status aquí
+//    message: 'La página que busca no pudo ser encontrada.' // Agregar mensaje de error aquí
+//  });
+//});
 
 
 // Defining api calls
@@ -77,5 +81,6 @@ router.get("/api/service-status", (req, res) => {
   // Devolver los datos en formato JSON
   res.json({ serviceState, runningInstances, cpuUsage, memoryUsage, storageUsage, averageResponseTime, requestsProcessed, errors });
 });
+
 
 module.exports = router;
