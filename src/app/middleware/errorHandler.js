@@ -1,11 +1,9 @@
-const log = require( "../logger");  // import logger 
-require('dotenv').config();  // import env variables
-var isDev= process.env.IS_DEV;
+const logger = require( "../utils/logger");  // import logger 
 
 // middleware for log errors
 const logErrors = (err, req, res, next) => {
-  if(isDev)console.error(err + "\n");
-  log.writeLog("err stack-> " + err.stack);
+  logger.consoleError(err + "\n");
+  logger.writeLog("err stack-> " + err.stack);
   next(err);
 }
 

@@ -1,12 +1,12 @@
 // Import fs and my timestamp module
 const fs = require("fs");
-const ts = require("./my_timestamps.js");
+const ts = require("./timestamps.js");
 require('dotenv').config();  // import env variables
 var isDev= process.env.IS_DEV;
 
 
 // Log file settings
-const log_dir = "./src/app/logger/logs/";
+const log_dir = "./src/app/utils/logs/";
 const log_file_name_prefix = "log";
 const log_file_name_suffix = ".txt";
 const max_log_file_size = 1024 * 1024; // 1 MB
@@ -24,6 +24,15 @@ if (numLogs == 0){
 
 // Export functions
 var exports = module.exports = {};
+
+// Función para debuguear en consola
+exports.consoleLog = (text)=>{
+  if(isDev)console.log(text);  
+};
+
+exports.consoleError = (text)=>{
+  if(isDev)console.error(text);  
+};
 
 // Función para escribir en el archivo de registro
 exports.writeLog = function(content) {
@@ -43,7 +52,7 @@ exports.writeLog = function(content) {
     stream.write(ts.getDate(Date.now()) + "\n" + content + "\n\n");
   }
   catch(e) {
-    if(isDev)console.log("log.writeLog failed.\n" + e.stack);
+    consoleLog("log.writeLog failed.\n" + e.stack);
   }
 };
 
@@ -63,10 +72,10 @@ exports.readLog = function(callback) {
 
 // Función para borrar el archivo de registro
 exports.clearLog = function(callback) {
-  // Cerrar el stream de escritura
+  // Cerrar el stream de escrituraf
   stream.end(function(end_error_str) {
     if(end_error_str) {
-      if(isDev)console.log("log.clearLog end failed: " + end_error_str);
+      consoleLog("log.clearLog end failed: " + end_error_str);
       callback("log.clearLog end failed: " + end_error_str);
       return;
     }
@@ -74,7 +83,7 @@ exports.clearLog = function(callback) {
     const log_file_name = getLogFileName();
     fs.unlink(log_file_name, function(unlink_error_str) {
       if(unlink_error_str) {
-        console.log("log.clearLog unlink failed: " + unlink_error_str);
+        consoleLog("log.clearLog unlink failed: " + unlink_error_str);
         callback("log.clearLog unlink failed: " + unlink_error_str);
         return;
       }
