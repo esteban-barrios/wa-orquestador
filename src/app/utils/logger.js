@@ -2,7 +2,7 @@
 const fs = require("fs");
 const ts = require("./timestamps.js");
 require('dotenv').config();  // import env variables
-var isDev= process.env.IS_DEV;
+var ENV= process.env.ENV;
 
 
 // Log file settings
@@ -27,11 +27,16 @@ var exports = module.exports = {};
 
 // Función para debuguear en consola
 exports.consoleLog = (text)=>{
-  if(isDev)console.log(text);  
+  if(ENV == "dev"){
+    console.log("entro");
+    console.log(text);
+  } 
 };
 
 exports.consoleError = (text)=>{
-  if(isDev)console.error(text);  
+  if(ENV == "dev"){
+    console.error(text);
+  } 
 };
 
 // Función para escribir en el archivo de registro

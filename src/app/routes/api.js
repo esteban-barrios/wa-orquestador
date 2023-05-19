@@ -13,12 +13,6 @@ ApiRouter.use((req, res, next) => {
   next();
 });
 
-// Defining api calls
-
-ApiRouter.get('/send-message', (req, res) => { 
-  res.send('Send message');
-});
-
 // Basic troubleshooting
 ApiRouter.get( "/logs", function( req, res ){
   logger.readLog( function( content ){

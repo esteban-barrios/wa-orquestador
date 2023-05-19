@@ -1,7 +1,9 @@
 const ApiRouter = require('./api');
 const WebsiteRouter = require('./website')
+const ChatBotRouter = require('./chatBot')
 
 module.exports = {
   ApiRouter: ApiRouter,
-  WebsiteRouter: WebsiteRouter
+  WebsiteRouter: WebsiteRouter,
+  ChatBotRouter: ChatBotRouter
 };

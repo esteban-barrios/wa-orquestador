@@ -21,6 +21,7 @@ app.set('view engine', 'ejs');
 // set routes
 app.use('/',routes.WebsiteRouter); 
 app.use('/api',routes.ApiRouter);  
+app.use('/chat-bot',routes.ChatBotRouter);
 // set error handler
 app.use(errors);
 
