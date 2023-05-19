@@ -34,7 +34,7 @@ const WA = () =>{
 }
 
 module.exports = {
-  Assistant: WA,
+  watsonAssistant: WA,
   sendMessage: asyncAssistantSendMessage,
   feedback: feedback
 }
