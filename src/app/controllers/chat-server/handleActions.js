@@ -1,7 +1,7 @@
 const watsonAssistant = require('../../lib/watsonAssistant');
 require('dotenv').config();  // import env variables
 
-async function handleActions (messagesResponse, session_id, file) {
+async function handleActions (messagesResponse, session_id) {
   let actions_widget = [];
   if(!messagesResponse.result.outputf) {
     return messagesResponse;

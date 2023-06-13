@@ -5,16 +5,17 @@ const routes = require('./routes');
 const errors = require('./middleware/errorHandler');
 require('dotenv').config();  // import env variables
 
+
 // initializing app 
 const app = express();
-// set cors
-app.use(cors());
 // set port
 app.set("port",process.env.PORT);
+// set cors
+//app.use(cors());
 // set public to static path
-app.use(express.static(path.join(__dirname,'../public')));
+var public_path = path.resolve(__dirname,'../public');
+app.use(express.static(public_path));
 // set views folder
-console.log(path.join(__dirname,'./views'));
 app.set("views" , path.join(__dirname,'./views'));
 // set views engine
 app.set('view engine', 'ejs');

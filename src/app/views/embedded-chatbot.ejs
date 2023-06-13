@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedded Chat Bot</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body onload= setUpChatbot>
+
+    <h1>Embedded Chat Bot</h1>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+
+    const socket = io.connect( "<%= base_url %>" );
+
+    socket.on( "asyncresult", function( data ){
+        if( data.error_str || !data.result ){
+            alert( JSON.stringify( data, null, 3 ) );
+            return;
+        }
+        messageChatbot( data.result );
+    });
+
+    var wa_instance;
+
+    function setUpChatbot(){
+        const t=document.createElement('script');
+        t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+        document.head.appendChild(t);
+        window.watsonAssistantChatOptions = {
+            integrationID     : "<%= wa_integration_id %>",
+            region            : "<%= wa_region %>",
+            serviceInstanceID : "<%= wa_service_instance_id %>",
+            onLoad: function( instance ){
+                wa_instance = instance;
+                instance.render();
+            },
+        };
+    }
+
+    function messageChatbot( txt ){
+        // https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=api-instance-methods#send
+        var send_obj = { "input": { "message_type" : "text", "text" : "ASYNCRESPONSE " + txt } };
+        wa_instance.send( send_obj, {} ).catch( function( error ) {
+          console.error( "Sending message to chatbot failed" );
+        });
+
+    }
+    </script>
+  </body>
+</html>

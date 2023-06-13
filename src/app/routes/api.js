@@ -29,20 +29,5 @@ ApiRouter.post( "/clearlogs", function( request, response ){
   });       
 });
 
-// Definir endpoint de la API para el panel de control
-ApiRouter.get("/service-status", (req, res) => {
-  // Obtener los datos necesarios del orquestador de un servicio de software
-  const serviceState = "activo"; // Estado del servicio (activo o inactivo)
-  const runningInstances = 5; // Número de instancias de servicio en ejecución
-  const cpuUsage = 50; // Porcentaje de uso de la CPU de las instancias de servicio
-  const memoryUsage = 80; // Porcentaje de uso de la memoria de las instancias de servicio
-  const storageUsage = 60; // Porcentaje de uso del almacenamiento de las instancias de servicio
-  const averageResponseTime = "50 ms"; // Tiempo de respuesta promedio del servicio
-  const requestsProcessed = 100; // Número de solicitudes procesadas
-  const errors = 2; // Número de errores de servicio
-
-  // Devolver los datos en formato JSON
-  res.json({ serviceState, runningInstances, cpuUsage, memoryUsage, storageUsage, averageResponseTime, requestsProcessed, errors });
-});
 
 module.exports = ApiRouter;

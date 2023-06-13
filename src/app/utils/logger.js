@@ -28,7 +28,6 @@ var exports = module.exports = {};
 // Función para debuguear en consola
 exports.consoleLog = (text)=>{
   if(ENV == "dev"){
-    console.log("entro");
     console.log(text);
   } 
 };

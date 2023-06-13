@@ -1,7 +1,7 @@
 // import 
 const express = require('express');
 const logger = require( "../utils/logger");  // import logger handler
-const chatbot= require('../controllers/chat-server/chatServer')
+const chatbot = require('../controllers/chat-server');
 // create new router with express
 const chatBotRouter = express.Router();
 
@@ -13,7 +13,7 @@ chatBotRouter.use((req, res, next) => {
   next();
 });
 
-chatBotRouter.post('/mensaje', chatbot.handleMessage);
-chatBotRouter.get('/sesion', chatbot.crearSesion);
+chatBotRouter.post('/enviar-mensaje', chatbot.handleMessage);
+chatBotRouter.get('/crear-sesion', chatbot.crearSesion);
 
 module.exports = chatBotRouter;

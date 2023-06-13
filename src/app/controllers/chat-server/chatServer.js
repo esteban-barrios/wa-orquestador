@@ -1,10 +1,8 @@
 const handleActions = require('./handleActions');
 const { watsonAssistant, sendMessage } = require('../../lib/watsonAssistant');
-const fs = require('fs')
 
 function crearSesion(req, res) {
-  watsonAssistant().createSession(
-    {
+  watsonAssistant().createSession({
       assistantId: process.env.WA_ID,
     },
     function(error, response) {
@@ -26,7 +24,7 @@ async function handleMessage(req, res, next) {
     messagesResponse = await envia_mensaje(req.body.data)
     res.json(messagesResponse);
   } catch(error) {
-    console.log("SOE Error en handleMessage", error); // send to error hanlder
+    console.log("Error en handleMessage", error); // send to error hanlder
     next(error);
   }
 }
