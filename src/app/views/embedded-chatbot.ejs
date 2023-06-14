@@ -5,13 +5,41 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
   <body onload= setUpChatbot>
+    <!-- Navbar -->
+    <section class="w-full px-8 text-white bg-black">
+      <div class="container-lg flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
+          <div class="relative flex flex-col md:flex-row">
+              <a href="#_" class="flex items-center mb-5 font-medium text-white lg:w-auto lg:items-center lg:justify-center md:mb-0">
+                  <span class="mx-auto text-xl font-black leading-none text-white select-none">WA Orquestador </span>
+              </a>
+          </div>
+          <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+            <nav class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8">
+              <a href="/" 
+                class="mr-10 font-medium leading-6 transition duration-300 hover:underline"
+                style="text-underline-offset: 8px;"> 
+                  Home
+              </a>
+              <a href="/embedded-chatbot" 
+                class="mr-10 font-medium leading-6 transition duration-300 underline"
+                style="text-underline-offset: 8px;">
+                  Embedded Chatbot
+              </a>
+              <a href="/custom-chatbot" 
+                class="mr-10 font-medium leading-6 transition duration-300 hover:underline"
+                style="text-underline-offset: 8px;">
+                  Custom Chatbot
+              </a>
+            </nav>
+          </div>
+      </div>
+    </section>
 
     <h1>Embedded Chat Bot</h1>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="socket.io/socket.io.js"></script>
 
     <script>
-
     const socket = io.connect( "<%= base_url %>" );
 
     socket.on( "asyncresult", function( data ){
@@ -23,20 +51,25 @@
     });
 
     var wa_instance;
-
     function setUpChatbot(){
-        const t=document.createElement('script');
-        t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
-        document.head.appendChild(t);
         window.watsonAssistantChatOptions = {
-            integrationID     : "<%= wa_integration_id %>",
-            region            : "<%= wa_region %>",
-            serviceInstanceID : "<%= wa_service_instance_id %>",
-            onLoad: function( instance ){
-                wa_instance = instance;
-                instance.render();
-            },
+          // A UUID like '1d7e34d5-3952-4b86-90eb-7c7232b9b540' included in the embed code provided in Watson Assistant.
+          integrationID: "<%= wa_integration_id %>",
+          // Your assistants region e.g. 'us-south', 'us-east', 'jp-tok' 'au-syd', 'eu-gb', 'eu-de', etc.
+          region: "<%= wa_region %>",
+          // A UUID like '6435434b-b3e1-4f70-8eff-7149d43d938b' included in the embed code provided in Watson Assistant.
+          serviceInstanceID: "<%= wa_service_instance_id %>",
+          // The callback function that is called after the widget instance has been created.
+          onLoad: function(instance) {
+            wa_instance = instance;
+            instance.render();
+          }
         };
+        setTimeout(function(){
+          const t=document.createElement('script');
+          t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+          document.head.appendChild(t);
+        });
     }
 
     function messageChatbot( txt ){

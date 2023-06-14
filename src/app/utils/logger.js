@@ -6,7 +6,7 @@ var ENV= process.env.ENV;
 
 
 // Log file settings
-const log_dir = "./src/app/utils/logs/";
+const log_dir = "./logs/";
 const log_file_name_prefix = "log";
 const log_file_name_suffix = ".txt";
 const max_log_file_size = 1024 * 1024; // 1 MB
