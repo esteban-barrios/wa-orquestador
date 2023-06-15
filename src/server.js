@@ -1,5 +1,4 @@
 const http = require('http');
-const axios = require( "axios" );
 const socketio = require( "socket.io");
 const dotenv = require('dotenv').config();  // import env variables
 
