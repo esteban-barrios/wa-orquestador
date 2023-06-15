@@ -38,7 +38,7 @@ chatBotRouter.get('/embedded', (req, res) => {
   res.render('embedded-chatbot', {  "wa_integration_id"      : process.env.WA_INTEGRATION_ID,
                                     "wa_region"              : process.env.WA_REGION,
                                     "wa_service_instance_id" : process.env.WA_SERVICE_INSTANCE_ID,
-                                    "base_url"               : process.env.WA_BASE_URL } 
+                                    "base_url"               : process.env.BASE_URL } 
   );
 
 });
