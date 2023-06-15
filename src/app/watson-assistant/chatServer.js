@@ -1,20 +1,6 @@
 const { handleActions } = require('./customActions');
-const { watsonAssistant , sendMessage} = require('./watsonAssistant');
-
-function crearSesion(req, res) {
-  watsonAssistant().createSession({
-      assistantId: process.env.WA_ID,
-    },
-    function(error, response) {
-      if (error) {
-        return res.send(error);
-      } else {
-        console.log("Sesión en WA creada, sessionId: " + response.result.session_id);
-        return res.send(response);
-      }
-    }
-  );
-};
+const { sendMessage} = require('./watsonAssistant');
+require('dotenv').config();  // import env variables
 
 
 async function handleMessage(req, res, next) {
@@ -65,6 +51,5 @@ async function envia_mensaje(data) {
 }
 
 module.exports = {
-  crearSesion,
   handleMessage
 }

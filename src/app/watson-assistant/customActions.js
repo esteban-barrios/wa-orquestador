@@ -2,8 +2,6 @@ const feedback = require('./services/feedback');
 const {ejemploIntegracion} = require('./services/ejemploModuloIntegracion');
 const {sendMessage} = require('./watsonAssistant');
 
-require('dotenv').config();  // import env variables
-
 async function handleActions (messagesResponse, session_id) {
   let actions_widget = [];
   if(!messagesResponse.result.outputf) {

@@ -1,6 +1,5 @@
 const AssistantV2 = require('ibm-watson/assistant/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
-require('dotenv').config();  // import env variables
 
 const asyncAssistantSendMessage = async (options) =>{
   return new Promise((resolve, reject) => {

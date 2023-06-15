@@ -13,7 +13,34 @@ chatBotRouter.use((req, res, next) => {
   next();
 });
 
+chatBotRouter.get('/custom', (req, res) => { 
+
+  chatbot.watsonAssistant().createSession(
+    {
+    assistantId: process.env.WA_ID,
+    },
+    function(error, response) {
+      if (error) {
+        next(err); // passing to default middleware error handler
+      } else {
+        console.log("Sesión en WA creada, sessionId: " + response.result.session_id);
+        return res.render('custom-chatbot',{wa_response: response});
+      }
+    }
+  );
+
+});
+
 chatBotRouter.post('/enviar-mensaje', chatbot.handleMessage);
-chatBotRouter.get('/crear-sesion', chatbot.crearSesion);
+
+
+chatBotRouter.get('/embedded', (req, res) => { 
+  res.render('embedded-chatbot', {  "wa_integration_id"      : process.env.WA_INTEGRATION_ID,
+                                    "wa_region"              : process.env.WA_REGION,
+                                    "wa_service_instance_id" : process.env.WA_SERVICE_INSTANCE_ID,
+                                    "base_url"               : process.env.WA_BASE_URL } 
+  );
+
+});
 
 module.exports = chatBotRouter;
