@@ -1,4 +1,7 @@
-const watsonAssistant = require('./watsonAssistant');
+const feedback = require('./services/feedback');
+const {ejemploIntegracion} = require('./services/ejemploModuloIntegracion');
+const {sendMessage} = require('./watsonAssistant');
+
 require('dotenv').config();  // import env variables
 
 async function handleActions (messagesResponse, session_id) {
@@ -11,7 +14,10 @@ async function handleActions (messagesResponse, session_id) {
     for (const action of messagesResponse.result.output.actions) {
       switch(action.name) {
         case 'feedback':
-          messagesResponse.result.output.generic.push(watsonAssistant.feedback(messagesResponse, action));
+          messagesResponse.result.output.generic.push(feedback(messagesResponse, action));
+          break;
+        case 'NombreAction':
+          messagesResponse.result.context.skills['main skill'].user_defined[action.result_variable] = await ejemploIntegracion(action.parameters)
           break;
       }
     }
@@ -21,7 +27,7 @@ async function handleActions (messagesResponse, session_id) {
       messagesResponse.result.context.skills['main skill'].user_defined.skip_user_input = false;
       
       // Envio de variables de contexto post action a Watson Assistant
-      messagesResponse = await watsonAssistant.sendMessage({
+      messagesResponse = await sendMessage({
         assistantId: process.env.WA_ID,
         sessionId: session_id,
         context: messagesResponse.result.context,

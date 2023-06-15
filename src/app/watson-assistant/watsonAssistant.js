@@ -13,14 +13,6 @@ const asyncAssistantSendMessage = async (options) =>{
     });
   });
 }
-const feedback = (messagesResponse, { parameters, result_variable }) => {
-	return {
-		response_type: 'feedback',
-	  title: parameters.title,
-	  message: parameters.message,
-	  variable: result_variable
-	}
-};
 
 const WA = () =>{
   parametros = {
@@ -36,5 +28,4 @@ const WA = () =>{
 module.exports = {
   watsonAssistant: WA,
   sendMessage: asyncAssistantSendMessage,
-  feedback: feedback
 }

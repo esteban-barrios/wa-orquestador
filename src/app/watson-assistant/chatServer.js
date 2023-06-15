@@ -1,5 +1,5 @@
-const handleActions = require('./handleActions');
-const { watsonAssistant, sendMessage } = require('./watsonAssistant');
+const { handleActions } = require('./customActions');
+const { watsonAssistant , sendMessage} = require('./watsonAssistant');
 
 function crearSesion(req, res) {
   watsonAssistant().createSession({
