@@ -1,6 +1,6 @@
 // import 
 const express = require('express');
-const logger = require( "../utils/logger");  // import logger handler
+const logger = require( "../logger");  
 
 // create new router with express
 const ApiRouter = express.Router();
@@ -13,7 +13,7 @@ ApiRouter.use((req, res, next) => {
   next();
 });
 
-// Basic troubleshooting
+// basic troubleshooting
 ApiRouter.get( "/logs", function( req, res ){
   logger.readLog( function( content ){
         res.status( 200 ).end( content );
@@ -28,7 +28,8 @@ ApiRouter.post( "/clearlogs", function( request, response ){
       response.status( 200 ).json( { "result" : "Success" } );
   });       
 });
-// For Code Engine pipeline to check
+
+// code Engine pipeline to check
 ApiRouter.get( "/health", function( request, response )
 {
     logger.consoleLog( "/health ..." );
@@ -36,6 +37,61 @@ ApiRouter.get( "/health", function( request, response )
     response.status( 200 ).end( "Success" );
     
 } );
+
+// pretend async endpoint for demo purposes
+ApiRouter.post( "/asyncendpoint", function( request, response ) {
+    logger.consoleLog( "/asyncendpoint body:\n" + JSON.stringify( request.body, null, 3 ) );
+    
+    var str = request.body.str ? request.body.str : "";
+    
+    setTimeout( function(){
+        // Wait 10 seconds before responding
+        
+        logger.consoleLog( "/asyncendpoint responds" );
+        
+        var result = str.split("").reverse().join(""); // Note: Just a random thing to show results. *Only works for ASCII text.
+        
+        response.status( 200 ).json( { "error_str" : "", "result" : result } );
+        
+    }, 10 * 1000 );
+    
+} );
+
+const base_url = process.env.BASE_URL;
+const port = process.env.PORT;
+const some_async_webservice = base_url+ ":" + port+ "/asyncendpoint";
+
+function callAsyncWebService( str, callback ){
+    var url  = some_async_webservice; // This would be whatever web service you need to call
+    var data = { "str" : str };
+    
+    axios.post( url, data ).then( function( result ){
+        if( 200 !== result.status ){
+            logger.consoleLog( "callAsyncWebService error: HTTP !== 200" );            
+            callback( "Call to async endpoint failed", {} );
+            return;
+        }
+        
+        logger.consoleLog( "callAsyncWebService success" );
+        callback( "", result.data );
+        
+    }).catch( function( error ){
+        logger.consoleLog( "callAsyncWebService axios error message:\n" + error.message );
+        callback( error.message, {} );
+        
+    });  
+}
+
+function sendMessage( data ){
+    try{
+        logger.consoleLog( "sendMessage data:\n" + JSON.stringify( data, null, 3 ) );
+        socket_p.emit( "asyncresult", data );
+    }
+    catch( e ){
+        logger.consoleLog( "sendMessage caught an error:\n" + e.message + "\n" + e.stack );
+    }
+}
+
 
 // Endpoint for Watson Assistant webhook
 ApiRouter.post( "/asyncwrapper", function( request, response ) {
@@ -57,26 +113,8 @@ ApiRouter.post( "/asyncwrapper", function( request, response ) {
         sendMessage( result_data ); 
     } );
             
-} );
+});
 
 
-// Pretend async endpoint for demo purposes
-ApiRouter.post( "/asyncendpoint", function( request, response ) {
-    logger.consoleLog( "/asyncendpoint body:\n" + JSON.stringify( request.body, null, 3 ) );
-    
-    var str = request.body.str ? request.body.str : "";
-    
-    setTimeout( function(){
-        // Wait 10 seconds before responding
-        
-        logger.consoleLog( "/asyncendpoint responds" );
-        
-        var result = str.split("").reverse().join(""); // Note: Just a random thing to show results. *Only works for ASCII text.
-        
-        response.status( 200 ).json( { "error_str" : "", "result" : result } );
-        
-    }, 10 * 1000 );
-    
-} );
 
 module.exports = ApiRouter;

@@ -1,13 +1,12 @@
 // import 
 const express = require('express');
-const logger = require( "../utils/logger");  // import logger handler
-
+const logger = require( "../logger");  
 
 // create new router with express
-const WebsiteRouter = express.Router();
+const Root = express.Router();
 
 // middleware for logs
-WebsiteRouter.use((req, res, next) => {
+Root.use((req, res, next) => {
   let content = `${req.method} url:: ${req.url}`;
   logger.consoleLog(content + "\n");
   logger.writeLog(content);
@@ -16,15 +15,15 @@ WebsiteRouter.use((req, res, next) => {
 
 
 // handle get requests
-WebsiteRouter.get('/', (req, res) => { 
+Root.get('/', (req, res) => { 
   res.render('index');
 });
 
-WebsiteRouter.get('/custom-chatbot', (req, res) => { 
+Root.get('/custom-chatbot', (req, res) => { 
   res.render('custom-chatbot');
 });
 
-WebsiteRouter.get('/embedded-chatbot', (req, res) => { 
+Root.get('/embedded-chatbot', (req, res) => { 
   res.render('embedded-chatbot', {  "wa_integration_id"      : process.env.WA_INTEGRATION_ID,
                                     "wa_region"              : process.env.WA_REGION,
                                     "wa_service_instance_id" : process.env.WA_SERVICE_INSTANCE_ID,
@@ -35,7 +34,7 @@ WebsiteRouter.get('/embedded-chatbot', (req, res) => {
 
 
 // // async example error
-// WebsiteRouter.get('/async-error', (req, res, next) => {
+// Root.get('/async-error', (req, res, next) => {
 //   setTimeout(() => {
 //     try {
 //       //console.log("Async code example.")
@@ -47,4 +46,4 @@ WebsiteRouter.get('/embedded-chatbot', (req, res) => {
 //   }, 100)
 // })
 
-module.exports = WebsiteRouter;
+module.exports = Root;

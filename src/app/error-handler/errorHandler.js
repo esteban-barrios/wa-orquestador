@@ -1,4 +1,4 @@
-const logger = require( "../utils/logger");  // import logger 
+const logger = require( "../logger");  // import logger 
 
 // middleware for log errors
 const logErrors = (err, req, res, next) => {

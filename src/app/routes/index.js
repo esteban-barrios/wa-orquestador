@@ -1,9 +1,9 @@
+const RootRouter = require('./root')
 const ApiRouter = require('./api');
-const WebsiteRouter = require('./website')
 const ChatBotRouter = require('./chatBot')
 
 module.exports = {
+  RootRouter: RootRouter,
   ApiRouter: ApiRouter,
-  WebsiteRouter: WebsiteRouter,
   ChatBotRouter: ChatBotRouter
 };

@@ -1,7 +1,7 @@
 // import 
 const express = require('express');
-const logger = require( "../utils/logger");  // import logger handler
-const chatbot = require('../controllers/chat-server');
+const logger = require( "../logger");  
+const chatbot = require('../watson-assistant');
 // create new router with express
 const chatBotRouter = express.Router();
 

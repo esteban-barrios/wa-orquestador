@@ -1,4 +1,4 @@
-const watsonAssistant = require('../../lib/watsonAssistant');
+const watsonAssistant = require('./watsonAssistant');
 require('dotenv').config();  // import env variables
 
 async function handleActions (messagesResponse, session_id) {
