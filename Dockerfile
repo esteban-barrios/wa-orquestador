@@ -1,5 +1,7 @@
 FROM node:18-alpine
 
+RUN apk update && apk add git g++ make py3-pip && apk upgrade libssl3 libcrypto3
+
 # Create app directory
 WORKDIR /app
 
@@ -17,5 +19,3 @@ COPY . .
 
 EXPOSE 8080
 CMD [ "node", "src/server.js" ]
-
-RUN apk upgrade libssl3 libcrypto3
