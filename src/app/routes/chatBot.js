@@ -15,19 +15,20 @@ chatBotRouter.use((req, res, next) => {
 
 chatBotRouter.get('/custom', (req, res) => { 
 
-  chatbot.watsonAssistant().createSession(
-    {
-    assistantId: process.env.WA_ID,
-    },
-    function(error, response) {
-      if (error) {
-        next(err); // passing to default middleware error handler
-      } else {
-        console.log("Sesión en WA creada, sessionId: " + response.result.session_id);
-        return res.render('custom-chatbot',{wa_response: response});
-      }
-    }
-  );
+  return res.render('custom-chatbot');
+  // chatbot.watsonAssistant().createSession(
+  //   {
+  //   assistantId: process.env.WA_ID,
+  //   },
+  //   function(error, response) {
+  //     if (error) {
+  //       next(err); // passing to default middleware error handler
+  //     } else {
+  //       console.log("Sesión en WA creada, sessionId: " + response.result.session_id);
+  //       return res.render('custom-chatbot',{wa_response: response});
+  //     }
+  //   }
+  // );
 
 });
 
