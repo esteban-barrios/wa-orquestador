@@ -1,6 +1,5 @@
 const http = require('http');
 const socketio = require( "socket.io");
-const dotenv = require('dotenv').config();  // import env variables
 
 const app = require('./app');
 const logger = require( "./app/logger");
@@ -13,7 +12,7 @@ const server = http.Server(app);
 var socket_p = null;
 const io = socketio(server);
 io.on( "connection", function( socket ) {
-    logger.writeLog( "\nsocket.io connection" );
+    logger.consoleLog( "\nsocket.io connection" );
     socket_p = socket;
 });
 
