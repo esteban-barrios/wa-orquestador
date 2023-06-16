@@ -1,40 +1,9 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Custom Chat Bot</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css" />
-  </head>
+  <%- include("includes/head") %>
   <body>
-    <!-- Navbar -->
-    <section class="w-full px-8 text-white bg-black">
-      <div class="container-lg flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
-          <div class="relative flex flex-col md:flex-row">
-              <a href="#_" class="flex items-center mb-5 font-medium text-white lg:w-auto lg:items-center lg:justify-center md:mb-0">
-                  <span class="mx-auto text-xl font-black leading-none text-white select-none">WA Orquestador </span>
-              </a>
-          </div>
-          <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
-            <nav class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8">
-              <a href="/" 
-                class="mr-10 font-medium leading-6 transition duration-300 hover:underline"
-                style="text-underline-offset: 8px;"> 
-                  Home
-              </a>
-              <a href="./embedded" 
-                class="mr-10 font-medium leading-6 transition duration-300 hover:underline"
-                style="text-underline-offset: 8px;">
-                  Embedded Chatbot
-              </a>
-              <a href="./custom" 
-                class="mr-10 font-medium leading-6 transition duration-300 underline"
-                style="text-underline-offset: 8px;">
-                  Custom Chatbot
-              </a>
-            </nav>
-          </div>
-      </div>
-    </section>
-    
+    <%- include("includes/navegation.ejs") %>
     <h1>EN CONTRUCCIÓN</h1>
+    <%- include("includes/footer.ejs") %>
   </body>
 </html>

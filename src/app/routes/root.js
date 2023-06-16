@@ -17,7 +17,10 @@ Root.use((req, res, next) => {
 
 // handle get requests
 Root.get('/', (req, res) => { 
-  res.render('index');
+  res.render('index',{ title : "Home",
+                       cssDir:"css/style.css",
+                       subfolder: "chat-bot" }
+  );
 });
 
 

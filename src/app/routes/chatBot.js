@@ -15,7 +15,10 @@ chatBotRouter.use((req, res, next) => {
 
 chatBotRouter.get('/custom', (req, res) => { 
 
-  return res.render('custom-chatbot');
+  return res.render('custom-chatbot',{ title : "Custom Chat Bot",
+                                       cssDir:"../css/style.css",
+                                       subfolder: "."}
+  );
   // chatbot.watsonAssistant().createSession(
   //   {
   //   assistantId: process.env.WA_ID,
@@ -36,7 +39,10 @@ chatBotRouter.post('/enviar-mensaje', chatbot.handleMessage);
 
 
 chatBotRouter.get('/embedded', (req, res) => { 
-  res.render('embedded-chatbot', {  "wa_integration_id"      : process.env.WA_INTEGRATION_ID,
+  res.render('embedded-chatbot', {  title : "Embedded Chat Bot",
+                                    cssDir:"../css/style.css",
+                                    subfolder: ".",
+                                    "wa_integration_id"      : process.env.WA_INTEGRATION_ID,
                                     "wa_region"              : process.env.WA_REGION,
                                     "wa_service_instance_id" : process.env.WA_SERVICE_INSTANCE_ID,
                                     "base_url"               : process.env.BASE_URL } 
