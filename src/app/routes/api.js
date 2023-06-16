@@ -60,7 +60,7 @@ ApiRouter.post( "/asyncendpoint", function( request, response ) {
 
 const base_url = process.env.BASE_URL;
 const port = process.env.PORT;
-const some_async_webservice = base_url+ ":" + port+ "api/asyncendpoint";
+const some_async_webservice = base_url+ ":" + port+ "/api/asyncendpoint";
 
 function callAsyncWebService( str, callback ){
     var url  = some_async_webservice; // This would be whatever web service you need to call

@@ -40,9 +40,6 @@
     <script>
       var wa_instance;
       function setUpChatbot(){
-        console.log("<%= wa_integration_id %>");
-        console.log("<%= wa_region %>");
-        console.log("<%= wa_service_instance_id %>");
         window.watsonAssistantChatOptions = {
           integrationID: "<%= wa_integration_id %>", // The ID of this integration.
           region:  "<%= wa_region %>", // The region your integration is hosted in.
