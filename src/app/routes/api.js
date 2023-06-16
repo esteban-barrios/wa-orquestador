@@ -2,6 +2,7 @@
 const express = require('express');
 const logger = require( "../logger");  
 const axios = require( "axios");
+const auth = require('basic-auth')
 
 // create new router with express
 const ApiRouter = express.Router();
@@ -12,6 +13,21 @@ ApiRouter.use((req, res, next) => {
   logger.consoleLog(content + "\n");
   logger.writeLog(content);
   next();
+});
+
+
+// This route doesn't need authentication
+ApiRouter.get('/public', function(req, res) {
+    res.json({
+      message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.'
+    });
+  });
+  
+// This route needs authentication
+ApiRouter.get('/private', function(req, res) {
+    res.json({
+        message: 'Hello from a private endpoint! You need to be authenticated to see this.'
+    });
 });
 
 // basic troubleshooting
@@ -39,6 +55,7 @@ ApiRouter.get( "/health", function( request, response )
     
 } );
 
+
 // pretend async endpoint for demo purposes
 ApiRouter.post( "/asyncendpoint", function( request, response ) {
     logger.consoleLog( "/asyncendpoint body:\n" + JSON.stringify( request.body, null, 3 ) );
@@ -57,6 +74,27 @@ ApiRouter.post( "/asyncendpoint", function( request, response ) {
     }, 10 * 1000 );
     
 } );
+
+// authentication endpoint
+
+ApiRouter.post( "/auth", async function( req, res ) {
+    logger.consoleLog( "/auth body:\n" + JSON.stringify( req.body, null, 3 ) );
+    
+    const user = await auth(req);
+    const username = 'test';
+    const password = '123456';
+
+    if (user && user.name.toLowerCase() === username.toLowerCase() && user.pass === password) {
+        logger.consoleLog('Basic Auth: success');
+        res.status( 200 ).json( { "result" : true } );
+    } else {
+        logger.consoleLog('Basic Auth: failure');
+        res.status( 200 ).json( { "result" : false } );
+    } 
+});
+
+
+
 
 const base_url = process.env.BASE_URL;
 const port = process.env.PORT;
